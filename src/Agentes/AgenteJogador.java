@@ -1,5 +1,8 @@
 package Agentes;
 
+import java.util.Map;
+import java.util.Random;
+
 import jade.core.AID;
 import jade.core.Agent;
 import Comportamentos.BuscarAgenteMediadorBehaviour;
@@ -9,9 +12,10 @@ import Comportamentos.SolicitarEntradaNoJogo;
 
 public class AgenteJogador extends Agent {
 
-	private int quantidadeDePalitos;
+	private int quantidadeDePalitosTotal;
 	private AID agenteMediadorAID;
 	private boolean jogando;
+	private int quantidadeDePalitosNaMao;
 	
 	protected void setup(){
 		this.jogando = false;
@@ -34,7 +38,7 @@ public class AgenteJogador extends Agent {
 	}
 	
 	private void iniciarNovaRodada(){
-		this.quantidadeDePalitos = 3;
+		this.quantidadeDePalitosTotal = 3;
 	}
 	
 	public AID getAgenteMediadorAID(){
@@ -44,8 +48,18 @@ public class AgenteJogador extends Agent {
 	public void setAgenteMediador(AID aid){
 		this.agenteMediadorAID = aid;
 	}
+	
+	public int getQuantidadeDePalitosNaMao(){
+		return this.quantidadeDePalitosNaMao;
+	}
+	
+	public void escolherNumeroDePalitos(){
+		Random random = new Random(this.quantidadeDePalitosTotal);
+		this.quantidadeDePalitosNaMao = random.nextInt();
+	}
 
-	public int gerarChute() {
+	public int gerarChute(Map<AID, Integer> chutes) {
 		return 0;
 	}
+	
 }
