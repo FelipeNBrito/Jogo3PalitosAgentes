@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import Comportamentos.mediador.ReceberQuantidadeDePalitosNaMaoBehavior;
 import Comportamentos.mediador.ReceberSolicitacaoDeJogoBehaviour;
 import Comportamentos.mediador.SolicitarQuantidadeDePalitosNaMaoBehaviour;
 
@@ -118,6 +119,7 @@ public class AgenteMediador extends Agent{
 		
 		quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
 		addBehaviour(new SolicitarQuantidadeDePalitosNaMaoBehaviour(this));
+		addBehaviour(new ReceberQuantidadeDePalitosNaMaoBehavior(this));
 		
 		AID jogadorDaVez = ordemDosJogadores.poll();
 		ordemDosJogadores.offer(jogadorDaVez);
