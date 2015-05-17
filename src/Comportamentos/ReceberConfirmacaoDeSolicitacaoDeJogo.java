@@ -19,7 +19,8 @@ public class ReceberConfirmacaoDeSolicitacaoDeJogo extends CyclicBehaviour{
 	
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-participar-do-jogo"), MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("accept-agente-entrou-no-jogo"), 
+				MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL));
 		ACLMessage msg = this.agente.receive(mt);
 		
 		if(msg != null){

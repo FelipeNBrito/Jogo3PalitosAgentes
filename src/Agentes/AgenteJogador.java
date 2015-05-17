@@ -16,10 +16,8 @@ public class AgenteJogador extends Agent {
 	protected void setup(){
 		this.jogando = false;
 		
-<<<<<<< HEAD
+
 		addBehaviour(new BuscarAgenteMediadorBehaviour(this));
-=======
-		addBehaviour(new BuscarAgenteMediadorBehaviour());
 		addBehaviour(new SolicitarEntradaNoJogo(this));
 		addBehaviour(new ReceberConfirmacaoDeSolicitacaoDeJogo(this));
 		
@@ -33,7 +31,6 @@ public class AgenteJogador extends Agent {
 	
 	public boolean isJogando(){
 		return this.jogando;
->>>>>>> origin/master
 	}
 	
 	private void iniciarNovaRodada(){
