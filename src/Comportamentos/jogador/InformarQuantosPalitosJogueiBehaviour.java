@@ -24,7 +24,8 @@ public class InformarQuantosPalitosJogueiBehaviour extends CyclicBehaviour{
 		if(msg != null){
 			
 			ACLMessage reply = msg.createReply();
-			reply.setContent(this.agente.getQuantidadeDePalitosNaMao()+"");
+			int quantidade = this.agente.getQuantidadeDePalitosNaMao();
+			reply.setContent(quantidade+"");
 			reply.setPerformative(ACLMessage.INFORM);
 			reply.setConversationId("inform-num-palitos");
 			this.agente.send(reply);
