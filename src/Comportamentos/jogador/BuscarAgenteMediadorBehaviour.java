@@ -1,4 +1,4 @@
-package Comportamentos;
+package Comportamentos.jogador;
 
 import Agentes.AgenteJogador;
 import jade.core.behaviours.Behaviour;

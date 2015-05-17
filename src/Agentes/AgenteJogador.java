@@ -7,10 +7,13 @@ import java.util.Random;
 
 import jade.core.AID;
 import jade.core.Agent;
-import Comportamentos.BuscarAgenteMediadorBehaviour;
-import Comportamentos.DarChute;
-import Comportamentos.ReceberConfirmacaoDeSolicitacaoDeJogo;
-import Comportamentos.SolicitarEntradaNoJogo;
+import Comportamentos.jogador.BuscarAgenteMediadorBehaviour;
+import Comportamentos.jogador.DarChute;
+import Comportamentos.jogador.InformarQuantosPalitosJogueiBehaviour;
+import Comportamentos.jogador.ReceberAvisoDoInicioDoJogoBehaviour;
+import Comportamentos.jogador.ReceberConfirmacaoDeSolicitacaoDeJogo;
+import Comportamentos.jogador.ReceberVencedorDaRodadaBehaviour;
+import Comportamentos.jogador.SolicitarEntradaNoJogo;
 
 public class AgenteJogador extends Agent {
 
@@ -28,10 +31,11 @@ public class AgenteJogador extends Agent {
 
 		addBehaviour(new BuscarAgenteMediadorBehaviour(this));
 		addBehaviour(new SolicitarEntradaNoJogo(this));
+		addBehaviour(new ReceberAvisoDoInicioDoJogoBehaviour(this));
 		addBehaviour(new ReceberConfirmacaoDeSolicitacaoDeJogo(this));
-		
+		addBehaviour(new InformarQuantosPalitosJogueiBehaviour(this));
 		addBehaviour(new DarChute(this));
-		
+		addBehaviour(new ReceberVencedorDaRodadaBehaviour(this));
 	}
 	
 	public void setJogando(boolean jogando){

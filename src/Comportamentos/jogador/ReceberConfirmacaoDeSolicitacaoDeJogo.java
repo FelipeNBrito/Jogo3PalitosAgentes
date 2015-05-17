@@ -1,4 +1,4 @@
-package Comportamentos;
+package Comportamentos.jogador;
 
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;

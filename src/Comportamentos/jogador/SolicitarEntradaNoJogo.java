@@ -1,4 +1,4 @@
-package Comportamentos;
+package Comportamentos.jogador;
 
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -29,6 +29,7 @@ public class SolicitarEntradaNoJogo extends Behaviour{
 			this.agente.send(msg);
 			
 			this.jaEnviouSolicitacao = true;
+			
 		}
 	}
 
