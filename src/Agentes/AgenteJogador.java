@@ -32,8 +32,8 @@ public class AgenteJogador extends Agent {
 
 		addBehaviour(new BuscarAgenteMediadorBehaviour(this));
 		addBehaviour(new SolicitarEntradaNoJogo(this));
-		addBehaviour(new ReceberAvisoDoInicioDoJogoBehaviour(this));
 		addBehaviour(new ReceberConfirmacaoDeSolicitacaoDeJogo(this));
+		addBehaviour(new ReceberAvisoDoInicioDoJogoBehaviour(this));
 		addBehaviour(new InformarQuantosPalitosJogueiBehaviour(this));
 		addBehaviour(new DarChute(this));
 		addBehaviour(new ReceberVencedorDaRodadaBehaviour(this));
