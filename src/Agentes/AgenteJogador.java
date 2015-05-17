@@ -1,19 +1,39 @@
 package Agentes;
 
-import Comportamentos.BuscarAgenteMediadorBehaviour;
 import jade.core.AID;
 import jade.core.Agent;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
+import Comportamentos.BuscarAgenteMediadorBehaviour;
+import Comportamentos.DarChute;
+import Comportamentos.ReceberConfirmacaoDeSolicitacaoDeJogo;
+import Comportamentos.SolicitarEntradaNoJogo;
 
 public class AgenteJogador extends Agent {
 
 	private int quantidadeDePalitos;
 	private AID agenteMediadorAID;
+	private boolean jogando;
 	
 	protected void setup(){
+		this.jogando = false;
 		
+<<<<<<< HEAD
 		addBehaviour(new BuscarAgenteMediadorBehaviour(this));
+=======
+		addBehaviour(new BuscarAgenteMediadorBehaviour());
+		addBehaviour(new SolicitarEntradaNoJogo(this));
+		addBehaviour(new ReceberConfirmacaoDeSolicitacaoDeJogo(this));
+		
+		addBehaviour(new DarChute(this));
+		
+	}
+	
+	public void setJogando(boolean jogando){
+		this.jogando = jogando;
+	}
+	
+	public boolean isJogando(){
+		return this.jogando;
+>>>>>>> origin/master
 	}
 	
 	private void iniciarNovaRodada(){
@@ -27,5 +47,8 @@ public class AgenteJogador extends Agent {
 	public void setAgenteMediador(AID aid){
 		this.agenteMediadorAID = aid;
 	}
-	
+
+	public int gerarChute() {
+		return 0;
+	}
 }
