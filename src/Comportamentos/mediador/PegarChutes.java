@@ -24,28 +24,30 @@ public class PegarChutes extends CyclicBehaviour{
 
 	@Override
 	public void action() {
-		//TODO Tratar se o chute foi válido
 		
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-chute"), 
-				MessageTemplate.MatchPerformative(ACLMessage.INFORM));
-		
-		ACLMessage msg = this.mediador.receive(mt);
-		
-		
-		if(jaMandouUmaVez == true && msg != null){
+		if(mediador.todosOsAgentesJaInformaramAQuantidadeDePalitosNaMao()){
 			
-			if(msg.getSender().getName().equals(mediador.jogadorDaVez().getName())){
+			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-chute"), 
+					MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+			
+			ACLMessage msg = this.mediador.receive(mt);
+			
+			
+			if(jaMandouUmaVez == true && msg != null){
 				
-				tratarChute(msg.getSender(), Integer.parseInt(msg.getContent()));
+				if(msg.getSender().getName().equals(mediador.jogadorDaVez().getName())){
+					
+					tratarChute(msg.getSender(), Integer.parseInt(msg.getContent()));
+					
+				}else{
+					this.block();
+				}
+			}else if(jaMandouUmaVez == false){
 				
+				enviarRequisicaoDeChute();
 			}else{
 				this.block();
 			}
-		}else if(jaMandouUmaVez == false){
-			
-			enviarRequisicaoDeChute();
-		}else{
-			this.block();
 		}
 			
 		
