@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import Comportamentos.mediador.ReceberSolicitacaoDeJogoBehaviour;
+import Comportamentos.mediador.SolicitarQuantidadeDePalitosNaMaoBehaviour;
 
 public class AgenteMediador extends Agent{
 	
@@ -22,6 +23,7 @@ public class AgenteMediador extends Agent{
 	private boolean jogoEmAndamento;
 	
 	private Queue<AID> ordemDosJogadores;
+	private Map<AID, Integer> quantidadeDePalitosNaMaoDosJogadores;
 	
 	private Map<AID,Integer> chutes;
 	
@@ -95,10 +97,29 @@ public class AgenteMediador extends Agent{
 		
 	}
 	
+	
+	public Map<AID,Integer> getQuantidadeDePalitosNaMaoDosJogadores(){
+		return this.quantidadeDePalitosNaMaoDosJogadores;
+	}
+	
+	public void addQuantidadeDePalitosNaMaoDoJogador(AID agenteAID, int quantidade){
+		if(quantidadeDePalitosNaMaoDosJogadores.get(agenteAID) == null){
+			quantidadeDePalitosNaMaoDosJogadores.put(agenteAID, quantidade);
+		}
+	}
+	
+	public boolean todosOsAgentesJaInformaramAQuantidadeDePalitosNaMao(){
+		if(quantidadeDePalitosNaMaoDosJogadores.size() == agentesNoJogo.size()){
+			return true;
+		}
+		return false;
+	}
 	public void iniciarRodada(){
 		
-		AID jogadorDaVez = ordemDosJogadores.poll();
+		quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
+		addBehaviour(new SolicitarQuantidadeDePalitosNaMaoBehaviour(this));
 		
+		AID jogadorDaVez = ordemDosJogadores.poll();
 		ordemDosJogadores.offer(jogadorDaVez);
 	}
 	
