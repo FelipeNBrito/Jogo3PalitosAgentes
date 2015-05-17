@@ -1,4 +1,4 @@
-package Comportamentos;
+package Comportamentos.mediador;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -24,6 +24,7 @@ public class PegarChutes extends CyclicBehaviour{
 
 	@Override
 	public void action() {
+		//TODO Tratar se o chute foi válido
 		
 		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-chute"), 
 				MessageTemplate.MatchPerformative(ACLMessage.INFORM));
@@ -66,6 +67,12 @@ public class PegarChutes extends CyclicBehaviour{
 		}
 		
 		mediador.send(mensagem);
+	}
+	
+	private void tratarChute(AID jogador, int chute){
+		if(mediador.chutesDaRodada().containsValue(chute)){
+			
+		}
 	}
 
 }
