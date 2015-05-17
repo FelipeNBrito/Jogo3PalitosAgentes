@@ -13,7 +13,7 @@ public class AgenteJogador extends Agent {
 	
 	protected void setup(){
 		
-		addBehaviour(new BuscarAgenteMediadorBehaviour());
+		addBehaviour(new BuscarAgenteMediadorBehaviour(this));
 	}
 	
 	private void iniciarNovaRodada(){

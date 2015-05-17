@@ -9,6 +9,11 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class BuscarAgenteMediadorBehaviour extends Behaviour{
 
+	private AgenteJogador myAgent;
+	
+	public BuscarAgenteMediadorBehaviour(AgenteJogador agente) {
+		this.myAgent = agente;
+	}
 	
 	@Override
 	public void action() {
@@ -26,7 +31,7 @@ public class BuscarAgenteMediadorBehaviour extends Behaviour{
 			DFAgentDescription[] result = DFService.search(this.myAgent, dfd);
 			
 			if(result.length > 0){
-				((AgenteJogador) this.myAgent).setAgenteMediador(result[0].getName());
+				this.myAgent.setAgenteMediador(result[0].getName());
 			}
 			
 		} catch (FIPAException e) {
@@ -39,7 +44,7 @@ public class BuscarAgenteMediadorBehaviour extends Behaviour{
 	@Override
 	public boolean done() {
 		
-		if( ((AgenteJogador) this.myAgent).getAgenteMediadorAID() != null){
+		if(this.myAgent.getAgenteMediadorAID() != null){
 			return true;
 		}
 		return false;
