@@ -38,7 +38,7 @@ public class PegarChutes extends CyclicBehaviour{
 				
 				mediador.registrarChute(msg.getSender(),Integer.parseInt(msg.getContent()));
 				
-				enviarRequisicaoDeChute();
+				tratarChute(jogador, chute);
 				
 			}else{
 				this.block();
@@ -71,8 +71,18 @@ public class PegarChutes extends CyclicBehaviour{
 	
 	private void tratarChute(AID jogador, int chute){
 		if(mediador.chutesDaRodada().containsValue(chute)){
-			
+			enviarRecusaDeChute(jogador, chute);
+		}else{
+			enviarRequisicaoDeChute();
 		}
+	}
+
+	private void enviarRecusaDeChute(AID jogador, int chute) {
+		ACLMessage mensagem = new ACLMessage(ACLMessage.REFUSE);
+		mensagem.addReceiver(jogador);
+		mensagem.setConversationId("refuse-chute");
+		mensagem.setContent(chute+"");
+		mediador.send(mensagem);
 	}
 
 }
