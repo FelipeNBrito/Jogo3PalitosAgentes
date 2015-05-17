@@ -36,9 +36,7 @@ public class PegarChutes extends CyclicBehaviour{
 			
 			if(msg.getSender().getName().equals(mediador.jogadorDaVez().getName())){
 				
-				mediador.registrarChute(msg.getSender(),Integer.parseInt(msg.getContent()));
-				
-				tratarChute(jogador, chute);
+				tratarChute(msg.getSender(), Integer.parseInt(msg.getContent()));
 				
 			}else{
 				this.block();
