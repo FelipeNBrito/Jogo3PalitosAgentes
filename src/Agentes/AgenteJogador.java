@@ -1,5 +1,7 @@
 package Agentes;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -16,10 +18,13 @@ public class AgenteJogador extends Agent {
 	private AID agenteMediadorAID;
 	private boolean jogando;
 	private int quantidadeDePalitosNaMao;
+	private boolean partidaIniciada;
+	private Map<AID, Integer> agentesNaPartida;
 	
 	protected void setup(){
 		this.jogando = false;
-		
+		this.partidaIniciada = false;
+		this.agentesNaPartida = new HashMap<AID, Integer>();
 
 		addBehaviour(new BuscarAgenteMediadorBehaviour(this));
 		addBehaviour(new SolicitarEntradaNoJogo(this));
@@ -60,6 +65,30 @@ public class AgenteJogador extends Agent {
 
 	public int gerarChute(Map<AID, Integer> chutes) {
 		return 0;
+	}
+	
+	public void setPartidaIniciada(boolean partidaIniciada){
+		this.partidaIniciada = partidaIniciada;
+	}
+	
+	public boolean isPartidaIniciada(){
+		return this.partidaIniciada;
+	}
+	
+	public void setQuantidadePalitosPorAgente(List<AID> agentes){
+		for (AID agente : agentes) {
+			this.agentesNaPartida.put(agente, 3);
+		}
+	}
+	
+	public void diminuirQuantidadeDePalitosDoVencedorDaRodada(AID agente){
+		if(agente.getName().equals(this.getName())){
+			this.quantidadeDePalitosTotal--;
+		}
+		Integer quantidadeDePalitos = this.agentesNaPartida.get(agente);
+		if(quantidadeDePalitos != null){
+			this.agentesNaPartida.put(agente, quantidadeDePalitos--);
+		}
 	}
 	
 }
