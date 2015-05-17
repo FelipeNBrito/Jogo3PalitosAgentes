@@ -1,5 +1,6 @@
 package Agentes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Comportamentos.mediador.ReceberSolicitacaoDeJogoBehaviour;
@@ -17,17 +18,12 @@ public class AgenteMediador extends Agent{
 	
 	protected void setup(){
 		
+		this.agentesNoJogo = new ArrayList<AID>();
 		this.jogoEmAndamento = false;
 		this.registrarNasPaginasAmarelas();
 		
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
 		
-	}
-	
-	public void addAgenteAoJogo(AID agenteAID){
-		if(!agentesNoJogo.contains(agenteAID)){
-			this.agentesNoJogo.add(agenteAID);
-		}
 	}
 	
 	public void registrarNasPaginasAmarelas(){
@@ -50,11 +46,21 @@ public class AgenteMediador extends Agent{
 		}
 	}
 	
+	public void addAgenteAoJogo(AID agenteAID){
+		if(!agentesNoJogo.contains(agenteAID)){
+			this.agentesNoJogo.add(agenteAID);
+		}
+	}
+	
 	public void setJogoEmAndamento(boolean valor){
 		this.jogoEmAndamento = valor;
 	}
 	
 	public boolean isJogoEmAndamento(){
 		return this.jogoEmAndamento;
+	}
+	
+	public List<AID> getJogadoresNoJogo(){
+		return this.agentesNoJogo;
 	}
 }
