@@ -71,6 +71,7 @@ public class PegarChutes extends CyclicBehaviour{
 		if(mediador.chutesDaRodada().containsValue(chute)){
 			enviarRecusaDeChute(jogador, chute);
 		}else{
+			mediador.registrarChute(jogador, chute);
 			enviarRequisicaoDeChute();
 		}
 	}
