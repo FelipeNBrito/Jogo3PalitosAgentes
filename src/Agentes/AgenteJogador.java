@@ -28,6 +28,7 @@ public class AgenteJogador extends Agent {
 		this.jogando = false;
 		this.partidaIniciada = false;
 		this.agentesNaPartida = new HashMap<AID, Integer>();
+		this.quantidadeDePalitosTotal = 3;
 
 		addBehaviour(new BuscarAgenteMediadorBehaviour(this));
 		addBehaviour(new SolicitarEntradaNoJogo(this));
@@ -44,10 +45,6 @@ public class AgenteJogador extends Agent {
 	
 	public boolean isJogando(){
 		return this.jogando;
-	}
-	
-	private void iniciarNovaRodada(){
-		this.quantidadeDePalitosTotal = 3;
 	}
 	
 	public AID getAgenteMediadorAID(){
