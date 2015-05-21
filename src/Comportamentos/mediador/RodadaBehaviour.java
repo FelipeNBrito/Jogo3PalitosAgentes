@@ -20,8 +20,8 @@ public class RodadaBehaviour extends Behaviour{
 	@Override
 	public void action() {
 		
-		
 		if(agente.todosOsJogadoresChutaram()){
+			System.out.println("O mediador vai analisar os chutes e indicar o vencedor");
 			Map<AID,Integer> jogadoresNoJogo = agente.chutesDaRodada();
 			
 			this.vencedorAID = null;

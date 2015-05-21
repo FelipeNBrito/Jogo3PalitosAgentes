@@ -23,6 +23,7 @@ public class ReceberSolicitacaoDeJogoBehaviour extends Behaviour {
 													MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 		ACLMessage msg = this.agente.receive(mt);
 		
+		
 		if(msg != null){
 			if(!this.agente.isJogoEmAndamento()){
 				AID agenteSolicitanteAID = msg.getSender();
@@ -33,7 +34,9 @@ public class ReceberSolicitacaoDeJogoBehaviour extends Behaviour {
 				resposta.setConversationId("accept-agente-entrou-no-jogo");
 				resposta.setContent("voce esta participando");
 				agente.send(resposta);
-			} else{
+				
+				System.out.println("O Agente "+agenteSolicitanteAID.getLocalName()+" entrou no jogo!");
+			}else{
 				ACLMessage resposta = msg.createReply();
 				resposta.setPerformative(ACLMessage.REFUSE);
 				resposta.setConversationId("jogo-ja-em-andamento");

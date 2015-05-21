@@ -25,13 +25,14 @@ public class PegarChutes extends CyclicBehaviour{
 	@Override
 	public void action() {
 		
-		if(mediador.todosOsAgentesJaInformaramAQuantidadeDePalitosNaMao() && this.mediador.todosOsJogadoresChutaram()){
+		if(mediador.todosOsAgentesJaInformaramAQuantidadeDePalitosNaMao() && !this.mediador.todosOsJogadoresChutaram()){
 			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-chute"), 
 					MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 			
 			ACLMessage msg = this.mediador.receive(mt);
 			
 			if(jaMandouUmaVez == true && msg != null){
+				System.out.println("asdsad");
 				if(msg.getSender().getName().equals(mediador.jogadorDaVez().getName())){
 					tratarChute(msg.getSender(), Integer.parseInt(msg.getContent()));
 					System.out.println("O chute do agente "+msg.getSender().getLocalName()+" foi "+Integer.parseInt(msg.getContent()));
@@ -60,6 +61,7 @@ public class PegarChutes extends CyclicBehaviour{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.jaMandouUmaVez = true;
 		mediador.send(mensagem);
 	}
 	

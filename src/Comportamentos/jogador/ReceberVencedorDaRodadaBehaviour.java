@@ -24,8 +24,9 @@ public class ReceberVencedorDaRodadaBehaviour extends CyclicBehaviour{
 		if(msg != null){
 			try {
 				AID vencedor = (AID) msg.getContentObject();
-				this.agente.diminuirQuantidadeDePalitosDoVencedorDaRodada(vencedor);
-				
+				if(vencedor != null){
+					this.agente.diminuirQuantidadeDePalitosDoVencedorDaRodada(vencedor);
+				}
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

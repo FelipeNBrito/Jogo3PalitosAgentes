@@ -2,7 +2,7 @@ package Agentes;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 import Comportamentos.mediador.InformarJogoIniciadoBaheviour;
 import Comportamentos.mediador.PegarChutes;
@@ -26,7 +25,7 @@ public class AgenteMediador extends Agent{
 	private List<AID> agentesNoJogo;
 	private Map<AID, Integer> quantidadeDePalitosTotal;
 	private boolean jogoEmAndamento;
-	private Queue<AID> ordemDosJogadores;
+	private List<AID> ordemDosJogadores;
 	private Map<AID,Integer> quantidadeDePalitosNaMaoDosJogadores;
 	private Map<AID,Integer> chutes;
 	
@@ -34,25 +33,21 @@ public class AgenteMediador extends Agent{
 	protected void setup(){
 		
 		this.agentesNoJogo = new ArrayList<AID>();
+		this.ordemDosJogadores = new ArrayList<AID>();
 		this.jogoEmAndamento = false;
 		this.registrarNasPaginasAmarelas();
 		this.chutes = new HashMap<AID, Integer>();
 		this.quantidadeDePalitosTotal = new HashMap<AID, Integer>();
 		
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
-		addBehaviour(new OneShotBehaviour(this) {
+		addBehaviour(new TickerBehaviour(this, 20000) {
 			
-			
+
 			@Override
-			public void action() {
-				try {
-					Thread.sleep(60000);
-					((AgenteMediador) myAgent).iniciarPartida();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+			protected void onTick() {
+				// TODO Auto-generated method stub
+				((AgenteMediador) myAgent).iniciarPartida();
+				this.myAgent.removeBehaviour(this);
 			}
 		});
 		
@@ -115,23 +110,23 @@ public class AgenteMediador extends Agent{
 
 	public boolean todosOsJogadoresChutaram(){
 		if(this.chutes.size() >= this.ordemDosJogadores.size()){
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	public AID jogadorDaVez() {
-		return this.ordemDosJogadores.peek();
+		if(this.ordemDosJogadores.size() > 0)
+			return this.ordemDosJogadores.get(0);
+		return null;
 	}
 
 	public void registrarChute(AID jogador, int chute) {
-		
-		AID jogadorDaVez = this.ordemDosJogadores.poll();
-		
-		this.ordemDosJogadores.offer(jogadorDaVez);
-		
+		if(this.ordemDosJogadores.size() > 0){
+			AID jogadorDaVez = this.ordemDosJogadores.remove(0);
+			this.ordemDosJogadores.add(jogadorDaVez);
+		}
 		this.chutes.put(jogador, chute);
-		
 	}
 	
 	
@@ -155,14 +150,16 @@ public class AgenteMediador extends Agent{
 	public void iniciarRodada(){
 		
 		this.quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
+		if(this.ordemDosJogadores.size() > 0){
+			AID jogadorDaVez = this.ordemDosJogadores.remove(0);
+			this.ordemDosJogadores.add(jogadorDaVez);
+		}
 		this.chutes = new HashMap<AID, Integer>();
 		addBehaviour(new SolicitarQuantidadeDePalitosNaMaoBehaviour(this));
 		addBehaviour(new ReceberQuantidadeDePalitosNaMaoBehavior(this));
 		addBehaviour(new PegarChutes(this));
 		addBehaviour(new RodadaBehaviour(this));
 		
-		AID jogadorDaVez = ordemDosJogadores.poll();
-		this.ordemDosJogadores.offer(jogadorDaVez);
 	}
 	
 	public void iniciarPartida(){
