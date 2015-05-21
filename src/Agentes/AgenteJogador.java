@@ -12,6 +12,7 @@ import Comportamentos.jogador.DarChute;
 import Comportamentos.jogador.InformarQuantosPalitosJogueiBehaviour;
 import Comportamentos.jogador.ReceberAvisoDoInicioDoJogoBehaviour;
 import Comportamentos.jogador.ReceberConfirmacaoDeSolicitacaoDeJogo;
+import Comportamentos.jogador.ReceberVencedorDaPartidaBehaviour;
 import Comportamentos.jogador.ReceberVencedorDaRodadaBehaviour;
 import Comportamentos.jogador.SolicitarEntradaNoJogo;
 
@@ -37,6 +38,7 @@ public class AgenteJogador extends Agent {
 		addBehaviour(new InformarQuantosPalitosJogueiBehaviour(this));
 		addBehaviour(new DarChute(this));
 		addBehaviour(new ReceberVencedorDaRodadaBehaviour(this));
+		addBehaviour(new ReceberVencedorDaPartidaBehaviour(this));
 	}
 	
 	public void setJogando(boolean jogando){

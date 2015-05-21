@@ -35,6 +35,8 @@ public class InformarJogoIniciadoBaheviour extends Behaviour{
 		}
 		
 		agente.send(message);
+		
+		System.out.println("Jogo iniciado!");
 	}
 
 	@Override

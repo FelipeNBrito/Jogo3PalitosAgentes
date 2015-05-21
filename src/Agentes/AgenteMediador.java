@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import Comportamentos.mediador.InformarJogoIniciadoBaheviour;
+import Comportamentos.mediador.PegarChutes;
 import Comportamentos.mediador.ReceberQuantidadeDePalitosNaMaoBehavior;
 import Comportamentos.mediador.ReceberSolicitacaoDeJogoBehaviour;
 import Comportamentos.mediador.SolicitarQuantidadeDePalitosNaMaoBehaviour;
@@ -20,12 +22,10 @@ import Comportamentos.mediador.SolicitarQuantidadeDePalitosNaMaoBehaviour;
 public class AgenteMediador extends Agent{
 	
 	private List<AID> agentesNoJogo;
-	
+	private Map<AID, Integer> quantidadeDePalitosTotal;
 	private boolean jogoEmAndamento;
-	
 	private Queue<AID> ordemDosJogadores;
-	private Map<AID, Integer> quantidadeDePalitosNaMaoDosJogadores;
-	
+	private Map<AID,Integer> quantidadeDePalitosNaMaoDosJogadores;
 	private Map<AID,Integer> chutes;
 	
 	
@@ -35,7 +35,7 @@ public class AgenteMediador extends Agent{
 		this.jogoEmAndamento = false;
 		this.registrarNasPaginasAmarelas();
 		this.chutes = new HashMap<AID, Integer>();
-		
+		this.quantidadeDePalitosTotal = new HashMap<AID, Integer>();
 		
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
 		
@@ -64,6 +64,7 @@ public class AgenteMediador extends Agent{
 	public void addAgenteAoJogo(AID agenteAID){
 		if(!agentesNoJogo.contains(agenteAID)){
 			this.agentesNoJogo.add(agenteAID);
+			this.quantidadeDePalitosTotal.put(agenteAID, 3);
 		}
 	}
 	
@@ -83,18 +84,24 @@ public class AgenteMediador extends Agent{
 		return chutes;
 	}
 
+	public boolean todosOsJogadoresChutaram(){
+		if(this.chutes.size() >= this.ordemDosJogadores.size()){
+			return false;
+		}
+		return true;
+	}
+	
 	public AID jogadorDaVez() {
-		
-		AID jogadorDaVez = ordemDosJogadores.poll();
-		
-		ordemDosJogadores.offer(jogadorDaVez);
-		
-		return jogadorDaVez;
+		return this.ordemDosJogadores.peek();
 	}
 
 	public void registrarChute(AID jogador, int chute) {
 		
-		chutes.put(jogador, chute);
+		AID jogadorDaVez = this.ordemDosJogadores.poll();
+		
+		this.ordemDosJogadores.offer(jogadorDaVez);
+		
+		this.chutes.put(jogador, chute);
 		
 	}
 	
@@ -117,18 +124,24 @@ public class AgenteMediador extends Agent{
 	}
 	public void iniciarRodada(){
 		
-		quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
+		this.quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
+		this.chutes = new HashMap<AID, Integer>();
 		addBehaviour(new SolicitarQuantidadeDePalitosNaMaoBehaviour(this));
 		addBehaviour(new ReceberQuantidadeDePalitosNaMaoBehavior(this));
-		
+		addBehaviour(new PegarChutes(this));
 		AID jogadorDaVez = ordemDosJogadores.poll();
-		ordemDosJogadores.offer(jogadorDaVez);
+		this.ordemDosJogadores.offer(jogadorDaVez);
 	}
 	
 	public void iniciarPartida(){
+		this.jogoEmAndamento = true;
 		
 		for(AID jogador:agentesNoJogo){
-			ordemDosJogadores.add(jogador);
+			this.ordemDosJogadores.add(jogador);
 		}
+		
+		addBehaviour(new InformarJogoIniciadoBaheviour(this));
+		
+		this.iniciarRodada();
 	}
 }

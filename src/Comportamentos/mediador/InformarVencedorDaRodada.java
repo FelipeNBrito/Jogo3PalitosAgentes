@@ -38,6 +38,8 @@ public class InformarVencedorDaRodada extends OneShotBehaviour{
 			mensagem.addReceiver(agenteAID);
 		}
 		agente.send(mensagem);
+		
+		System.out.println("O vencedor da rodada foi o agente "+this.vencedorAID.getLocalName());
 	}
 
 }
