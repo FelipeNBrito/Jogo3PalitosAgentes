@@ -2,6 +2,7 @@ package Agentes;
 
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -39,6 +40,21 @@ public class AgenteMediador extends Agent{
 		this.quantidadeDePalitosTotal = new HashMap<AID, Integer>();
 		
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
+		addBehaviour(new OneShotBehaviour(this) {
+			
+			
+			@Override
+			public void action() {
+				try {
+					Thread.sleep(60000);
+					((AgenteMediador) myAgent).iniciarPartida();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		});
 		
 	}
 	
