@@ -17,6 +17,7 @@ import Comportamentos.mediador.InformarJogoIniciadoBaheviour;
 import Comportamentos.mediador.PegarChutes;
 import Comportamentos.mediador.ReceberQuantidadeDePalitosNaMaoBehavior;
 import Comportamentos.mediador.ReceberSolicitacaoDeJogoBehaviour;
+import Comportamentos.mediador.RodadaBehaviour;
 import Comportamentos.mediador.SolicitarQuantidadeDePalitosNaMaoBehaviour;
 
 public class AgenteMediador extends Agent{
@@ -39,6 +40,18 @@ public class AgenteMediador extends Agent{
 		
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
 		
+	}
+	
+	public int getQuantidadeTotalDePalitosNaMaoDosJogadores(){
+		int total = 0;
+		for(int quantidadeDoAgente : quantidadeDePalitosNaMaoDosJogadores.values()){
+			total += quantidadeDoAgente;
+		}	
+		return total;
+	}
+	
+	public void decrementarPalitoDoJogador(AID agenteAID){
+		quantidadeDePalitosNaMaoDosJogadores.put(agenteAID, quantidadeDePalitosTotal.get(agenteAID) - 1);
 	}
 	
 	public void registrarNasPaginasAmarelas(){
@@ -122,6 +135,7 @@ public class AgenteMediador extends Agent{
 		}
 		return false;
 	}
+	
 	public void iniciarRodada(){
 		
 		this.quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
@@ -129,6 +143,8 @@ public class AgenteMediador extends Agent{
 		addBehaviour(new SolicitarQuantidadeDePalitosNaMaoBehaviour(this));
 		addBehaviour(new ReceberQuantidadeDePalitosNaMaoBehavior(this));
 		addBehaviour(new PegarChutes(this));
+		addBehaviour(new RodadaBehaviour(this));
+		
 		AID jogadorDaVez = ordemDosJogadores.poll();
 		this.ordemDosJogadores.offer(jogadorDaVez);
 	}
