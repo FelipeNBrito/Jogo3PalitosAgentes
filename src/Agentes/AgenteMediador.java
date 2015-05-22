@@ -13,12 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Comportamentos.mediador.EnviarSolicitacaoDeChute;
 import Comportamentos.mediador.InformarJogoIniciadoBaheviour;
-import Comportamentos.mediador.PegarChutes;
 import Comportamentos.mediador.ReceberQuantidadeDePalitosNaMaoBehavior;
+import Comportamentos.mediador.ReceberSolicitacaoDeChute;
 import Comportamentos.mediador.ReceberSolicitacaoDeJogoBehaviour;
 import Comportamentos.mediador.RodadaBehaviour;
 import Comportamentos.mediador.SolicitarQuantidadeDePalitosNaMaoBehaviour;
+import GUI.LogDoJogo;
 
 public class AgenteMediador extends Agent{
 	
@@ -28,6 +30,7 @@ public class AgenteMediador extends Agent{
 	private List<AID> ordemDosJogadores;
 	private Map<AID,Integer> quantidadeDePalitosNaMaoDosJogadores;
 	private Map<AID,Integer> chutes;
+	private LogDoJogo log;
 	
 	
 	protected void setup(){
@@ -38,6 +41,8 @@ public class AgenteMediador extends Agent{
 		this.registrarNasPaginasAmarelas();
 		this.chutes = new HashMap<AID, Integer>();
 		this.quantidadeDePalitosTotal = new HashMap<AID, Integer>();
+		this.log = LogDoJogo.criarEMostrarGUI();
+		
 		
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
 		addBehaviour(new TickerBehaviour(this, 20000) {
@@ -53,6 +58,24 @@ public class AgenteMediador extends Agent{
 		
 	}
 	
+	public void addLog(String log){
+		this.log.addLog(log);
+	}
+	
+	public void decrementaTotalDePalitosDoJogador(AID agenteAID){
+		quantidadeDePalitosTotal.put(agenteAID, quantidadeDePalitosTotal.get(agenteAID) - 1);
+	}
+	
+	public int getTotalDePalitosDoJogador(AID agenteAID){
+		return this.quantidadeDePalitosTotal.get(agenteAID);
+	}
+	
+	public void fimDeJogo(AID vencedor){
+		this.jogoEmAndamento = false;
+		System.out.println("O agente vencedor foi: " + vencedor.getLocalName());
+		this.doDelete();
+	}
+	
 	public int getQuantidadeTotalDePalitosNaMaoDosJogadores(){
 		int total = 0;
 		for(int quantidadeDoAgente : quantidadeDePalitosNaMaoDosJogadores.values()){
@@ -61,7 +84,13 @@ public class AgenteMediador extends Agent{
 		return total;
 	}
 	
-	public void decrementarPalitoDoJogador(AID agenteAID){
+	public boolean jogadorJaChutouNaRodada(AID agenteAid){
+		return this.chutes.containsKey(agenteAid);
+		
+		
+	}
+	
+	public void decrementarPalitosNaMaoDoJogador(AID agenteAID){
 		quantidadeDePalitosNaMaoDosJogadores.put(agenteAID, quantidadeDePalitosTotal.get(agenteAID) - 1);
 	}
 	
@@ -109,7 +138,7 @@ public class AgenteMediador extends Agent{
 	}
 
 	public boolean todosOsJogadoresChutaram(){
-		if(this.chutes.size() >= this.ordemDosJogadores.size()){
+		if(this.chutes.size() >= this.agentesNoJogo.size()){
 			return true;
 		}
 		return false;
@@ -150,14 +179,17 @@ public class AgenteMediador extends Agent{
 	public void iniciarRodada(){
 		
 		this.quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
+		this.chutes = new HashMap<AID, Integer>();
 		if(this.ordemDosJogadores.size() > 0){
 			AID jogadorDaVez = this.ordemDosJogadores.remove(0);
 			this.ordemDosJogadores.add(jogadorDaVez);
 		}
-		this.chutes = new HashMap<AID, Integer>();
+	
 		addBehaviour(new SolicitarQuantidadeDePalitosNaMaoBehaviour(this));
 		addBehaviour(new ReceberQuantidadeDePalitosNaMaoBehavior(this));
-		addBehaviour(new PegarChutes(this));
+		TickerBehaviour solicitarChute = new EnviarSolicitacaoDeChute(this, 5000);
+		addBehaviour(solicitarChute);
+		addBehaviour(new ReceberSolicitacaoDeChute(this,solicitarChute));
 		addBehaviour(new RodadaBehaviour(this));
 		
 	}
