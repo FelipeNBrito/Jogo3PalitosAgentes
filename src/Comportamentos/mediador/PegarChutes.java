@@ -25,6 +25,12 @@ public class PegarChutes extends CyclicBehaviour{
 	@Override
 	public void action() {
 		
+		if(mediador.todosOsAgentesJaInformaramAQuantidadeDePalitosNaMao()){
+			this.enviarRequisicaoDeChute(mediador.jogadorDaVez());
+		}
+		
+		
+		
 		if(mediador.todosOsAgentesJaInformaramAQuantidadeDePalitosNaMao() && !this.mediador.todosOsJogadoresChutaram()){
 			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-chute"), 
 					MessageTemplate.MatchPerformative(ACLMessage.INFORM));
@@ -32,15 +38,15 @@ public class PegarChutes extends CyclicBehaviour{
 			ACLMessage msg = this.mediador.receive(mt);
 			
 			if(jaMandouUmaVez == true && msg != null){
-				System.out.println("asdsad");
+		
 				if(msg.getSender().getName().equals(mediador.jogadorDaVez().getName())){
 					tratarChute(msg.getSender(), Integer.parseInt(msg.getContent()));
-					System.out.println("O chute do agente "+msg.getSender().getLocalName()+" foi "+Integer.parseInt(msg.getContent()));
+					mediador.addLog("O chute do agente "+msg.getSender().getLocalName()+" foi "+Integer.parseInt(msg.getContent()));
 				}else{
 					this.block();
 				}
 			}else if(jaMandouUmaVez == false){
-				enviarRequisicaoDeChute();
+				enviarRequisicaoDeChute(mediador.jogadorDaVez());
 			}else{
 				this.block();
 			}
@@ -49,11 +55,14 @@ public class PegarChutes extends CyclicBehaviour{
 		}
 	}
 
-	private void enviarRequisicaoDeChute() {
+	private void enviarRequisicaoDeChute(AID aidDestinatario) {
 		
 		ACLMessage mensagem = new ACLMessage(ACLMessage.REQUEST);
 		
 		mensagem.setConversationId("request-chute");
+		mensagem.addReceiver(aidDestinatario);
+		
+		mediador.addLog("Solicitacao de chute enviada ao jogador: "+ aidDestinatario.getLocalName());
 		
 		try {
 			mensagem.setContentObject((Serializable) mediador.chutesDaRodada());
@@ -70,7 +79,7 @@ public class PegarChutes extends CyclicBehaviour{
 			enviarRecusaDeChute(jogador, chute);
 		}else{
 			mediador.registrarChute(jogador, chute);
-			enviarRequisicaoDeChute();
+			enviarRequisicaoDeChute(mediador.jogadorDaVez());
 		}
 	}
 

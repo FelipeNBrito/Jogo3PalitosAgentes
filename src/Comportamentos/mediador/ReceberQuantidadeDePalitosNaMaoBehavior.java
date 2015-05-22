@@ -31,7 +31,12 @@ public class ReceberQuantidadeDePalitosNaMaoBehavior extends Behaviour{
 
 	@Override
 	public boolean done() {
-		return this.agente.todosOsAgentesJaInformaramAQuantidadeDePalitosNaMao();
+		
+		if(this.agente.todosOsAgentesJaInformaramAQuantidadeDePalitosNaMao()){
+			agente.addLog("Todos os agentes já informaram a quantidade de palitos na mao!");
+			return true;
+		}
+		return false;
 	}
 
 

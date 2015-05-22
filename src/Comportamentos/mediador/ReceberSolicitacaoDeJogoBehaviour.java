@@ -35,7 +35,7 @@ public class ReceberSolicitacaoDeJogoBehaviour extends Behaviour {
 				resposta.setContent("voce esta participando");
 				agente.send(resposta);
 				
-				System.out.println("O Agente "+agenteSolicitanteAID.getLocalName()+" entrou no jogo!");
+				agente.addLog("O Agente "+agenteSolicitanteAID.getLocalName()+" entrou no jogo!");
 			}else{
 				ACLMessage resposta = msg.createReply();
 				resposta.setPerformative(ACLMessage.REFUSE);

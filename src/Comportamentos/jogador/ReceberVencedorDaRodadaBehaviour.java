@@ -26,6 +26,7 @@ public class ReceberVencedorDaRodadaBehaviour extends CyclicBehaviour{
 				AID vencedor = (AID) msg.getContentObject();
 				if(vencedor != null){
 					this.agente.diminuirQuantidadeDePalitosDoVencedorDaRodada(vencedor);
+					System.out.println("A quantidade de palitos do jogador " + vencedor.getLocalName() + " foi decrementda");
 				}
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block

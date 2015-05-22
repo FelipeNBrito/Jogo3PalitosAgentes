@@ -26,6 +26,7 @@ public class SolicitarQuantidadeDePalitosNaMaoBehaviour extends OneShotBehaviour
 		
 		for(AID agenteAID : jogadoresNoJogo){
 			mensagem.addReceiver(agenteAID);
+			agente.addLog("O Agente Mediador solicitou a quantidade de palitos na mão do: "+ agenteAID.getName());
 		}
 		
 		agente.send(mensagem);

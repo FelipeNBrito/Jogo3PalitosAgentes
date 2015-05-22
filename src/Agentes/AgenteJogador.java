@@ -21,7 +21,7 @@ public class AgenteJogador extends Agent {
 	private int quantidadeDePalitosTotal;
 	private AID agenteMediadorAID;
 	private boolean jogando;
-	private int quantidadeDePalitosNaMao;
+	private int quantidadeDePalitosNaMao = 0;
 	private boolean partidaIniciada;
 	private Map<AID, Integer> agentesNaPartida;
 	
@@ -62,12 +62,25 @@ public class AgenteJogador extends Agent {
 	}
 	
 	public void escolherNumeroDePalitos(){
-		Random random = new Random(this.quantidadeDePalitosTotal);
-		this.quantidadeDePalitosNaMao = random.nextInt();
+		Random random = new Random();
+		this.quantidadeDePalitosNaMao = random.nextInt(this.quantidadeDePalitosTotal + 1);
 	}
 
 	public int gerarChute(Map<AID, Integer> chutes) {
-		return 0;
+		int somaPalitosTotal = 0;
+		for(int totalDoAgente : agentesNaPartida.values()){
+			somaPalitosTotal += totalDoAgente;
+		}
+		
+		Random rand = new Random();
+		int chute = rand.nextInt(somaPalitosTotal - quantidadeDePalitosTotal+ quantidadeDePalitosNaMao + 1);
+		
+		if(chutes.containsValue(chute)){
+			return gerarChute(chutes);
+		}
+		
+		return chute;
+		
 	}
 	
 	public void setPartidaIniciada(boolean partidaIniciada){
@@ -85,12 +98,12 @@ public class AgenteJogador extends Agent {
 	}
 	
 	public void diminuirQuantidadeDePalitosDoVencedorDaRodada(AID agente){
-		if(agente.getName().equals(this.getName())){
+		if(agente.equals(this.getAID())){
 			this.quantidadeDePalitosTotal--;
 		}
 		Integer quantidadeDePalitos = this.agentesNaPartida.get(agente);
 		if(quantidadeDePalitos != null){
-			this.agentesNaPartida.put(agente, quantidadeDePalitos--);
+			this.agentesNaPartida.put(agente, quantidadeDePalitos - 1);
 		}
 	}
 	

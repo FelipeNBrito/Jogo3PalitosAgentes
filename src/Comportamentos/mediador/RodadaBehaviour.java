@@ -21,7 +21,7 @@ public class RodadaBehaviour extends Behaviour{
 	public void action() {
 		
 		if(agente.todosOsJogadoresChutaram()){
-			System.out.println("O mediador vai analisar os chutes e indicar o vencedor");
+			agente.addLog("O mediador vai analisar os chutes e indicar o vencedor");
 			Map<AID,Integer> jogadoresNoJogo = agente.chutesDaRodada();
 			
 			this.vencedorAID = null;
@@ -36,8 +36,12 @@ public class RodadaBehaviour extends Behaviour{
 			}
 			
 			if(vencedorAID != null){
-				this.agente.decrementarPalitoDoJogador(vencedorAID);
+				this.agente.decrementaTotalDePalitosDoJogador(vencedorAID);
 				agente.addBehaviour(new InformarVencedorDaRodada(this.agente, vencedorAID));
+				if(this.agente.getTotalDePalitosDoJogador(vencedorAID) == 0){
+					agente.fimDeJogo(vencedorAID);
+				}
+				
 			} else{
 				agente.addBehaviour(new InformarVencedorDaRodada(this.agente, null));
 			}
@@ -48,7 +52,11 @@ public class RodadaBehaviour extends Behaviour{
 
 	@Override
 	public boolean done() {
-		return flag;
+		if(flag){
+			this.agente.iniciarRodada();
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -20,11 +20,13 @@ public class DarChute extends CyclicBehaviour{
 	
 	@Override
 	public void action() {
+		
 		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), 
 				MessageTemplate.MatchConversationId("request-chute"));
 		ACLMessage msg = myAgent.receive(mt);
 		
-		if(msg != null && this.agente.isJogando()){
+		if(msg != null){
+			
 			ACLMessage chute = msg.createReply();
 			try {
 				Map<AID, Integer> chutes = (Map<AID, Integer>) msg.getContentObject();
@@ -38,6 +40,8 @@ public class DarChute extends CyclicBehaviour{
 			} catch (UnreadableException e){
 				e.printStackTrace();
 			}
+			
+		
 		}else{
 			this.block();
 		}
