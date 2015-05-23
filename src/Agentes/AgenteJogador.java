@@ -104,6 +104,7 @@ public class AgenteJogador extends Agent {
 		Integer quantidadeDePalitos = this.agentesNaPartida.get(agente);
 		if(quantidadeDePalitos != null){
 			this.agentesNaPartida.put(agente, quantidadeDePalitos - 1);
+
 		}
 	}
 	
