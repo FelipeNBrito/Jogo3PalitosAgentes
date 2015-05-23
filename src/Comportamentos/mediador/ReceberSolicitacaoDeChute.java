@@ -18,8 +18,9 @@ public class ReceberSolicitacaoDeChute extends Behaviour{
 	@Override
 	public void action() {
 		
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-chute"), 
-				MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchOntology("inform-chute"), 
+				MessageTemplate.MatchPerformative(ACLMessage.INFORM)),MessageTemplate.MatchConversationId(String.valueOf(mediador.getNumeroDaRodada())));
+
 		
 		ACLMessage msg = this.mediador.receive(mt);
 		

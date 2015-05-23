@@ -17,7 +17,7 @@ public class ReceberVencedorDaRodadaBehaviour extends CyclicBehaviour{
 	
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-jogador-vencedor"), 
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchOntology("inform-jogador-vencedor"), 
 				MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 		ACLMessage msg = this.agente.receive(mt);
 		

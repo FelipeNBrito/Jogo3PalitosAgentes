@@ -22,7 +22,7 @@ public class DarChute extends CyclicBehaviour{
 	public void action() {
 		
 		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), 
-				MessageTemplate.MatchConversationId("request-chute"));
+				MessageTemplate.MatchOntology("request-chute"));
 		ACLMessage msg = myAgent.receive(mt);
 		
 		if(msg != null){
@@ -33,7 +33,8 @@ public class DarChute extends CyclicBehaviour{
 				int valorChute = this.agente.gerarChute(chutes);
 				
 				chute.setContent(valorChute+"");
-				chute.setConversationId("inform-chute");
+				chute.setOntology("inform-chute");
+				chute.setConversationId(msg.getConversationId());
 				chute.setPerformative(ACLMessage.INFORM);
 				myAgent.send(chute);
 				

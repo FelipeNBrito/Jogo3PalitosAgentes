@@ -16,14 +16,16 @@ public class ReceberQuantidadeDePalitosNaMaoBehavior extends Behaviour{
 	@Override
 	public void action() {
 
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-num-palitos"), 
-				MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchOntology("inform-num-palitos"), 
+				MessageTemplate.MatchPerformative(ACLMessage.INFORM)),MessageTemplate.MatchConversationId(String.valueOf(agente.getNumeroDaRodada())));
 		
 		ACLMessage mensagem = this.agente.receive(mt);
 		
 		if(mensagem != null){
 			int quantidadeDePalitos = Integer.parseInt(mensagem.getContent());
 			agente.addQuantidadeDePalitosNaMaoDoJogador(mensagem.getSender(), quantidadeDePalitos);
+			agente.addLog("O agente " + mensagem.getSender().getLocalName() + " informou que tem " + 
+					quantidadeDePalitos + " palitos na mão.");
 		}else{
 			block();
 		}

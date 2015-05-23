@@ -20,7 +20,9 @@ public class InformarJogoIniciadoBaheviour extends Behaviour{
 	@Override
 	public void action() {
 		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-		message.setConversationId("inform-inicio-jogo");
+		message.setOntology("inform-inicio-jogo");
+		
+		message.setConversationId(String.valueOf(agente.getNumeroDaRodada()));
 		
 		List<AID> jogadoresNoJogo = agente.getJogadoresNoJogo();
 		try {

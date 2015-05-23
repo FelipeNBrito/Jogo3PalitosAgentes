@@ -19,7 +19,7 @@ public class ReceberAvisoDoInicioDoJogoBehaviour extends CyclicBehaviour{
 	
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-inicio-jogo"), 
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchOntology("inform-inicio-jogo"), 
 				MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 		
 		ACLMessage msg = this.agente.receive(mt);

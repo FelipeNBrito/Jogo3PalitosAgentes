@@ -31,6 +31,7 @@ public class AgenteMediador extends Agent{
 	private Map<AID,Integer> quantidadeDePalitosNaMaoDosJogadores;
 	private Map<AID,Integer> chutes;
 	private LogDoJogo log;
+	private int numeroDaRodada;
 	
 	
 	protected void setup(){
@@ -42,6 +43,7 @@ public class AgenteMediador extends Agent{
 		this.chutes = new HashMap<AID, Integer>();
 		this.quantidadeDePalitosTotal = new HashMap<AID, Integer>();
 		this.log = LogDoJogo.criarEMostrarGUI();
+		this.numeroDaRodada = 0;
 		
 		
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
@@ -56,6 +58,10 @@ public class AgenteMediador extends Agent{
 			}
 		});
 		
+	}
+	
+	public int getNumeroDaRodada(){
+		return numeroDaRodada;
 	}
 	
 	public void addLog(String log){
@@ -177,7 +183,7 @@ public class AgenteMediador extends Agent{
 	}
 	
 	public void iniciarRodada(){
-		
+		this.numeroDaRodada++;
 		this.quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
 		this.chutes = new HashMap<AID, Integer>();
 		if(this.ordemDosJogadores.size() > 0){
