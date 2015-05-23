@@ -24,7 +24,7 @@ public class ReceberSolicitacaoDeChute extends Behaviour{
 		
 		ACLMessage msg = this.mediador.receive(mt);
 		
-		if(msg != null && mediador.jogadorJaChutouNaRodada(msg.getSender())){
+		if(msg != null && !mediador.jogadorJaChutouNaRodada(msg.getSender())){
 			
 			int chute = Integer.parseInt(msg.getContent());		
 			mediador.addLog("O chute do agente "+msg.getSender().getLocalName()+" foi "+ chute);

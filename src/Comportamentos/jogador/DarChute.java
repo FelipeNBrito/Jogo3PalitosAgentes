@@ -34,6 +34,7 @@ public class DarChute extends CyclicBehaviour{
 				
 				chute.setContent(valorChute+"");
 				chute.setOntology("inform-chute");
+				chute.setConversationId(msg.getConversationId());
 				chute.setPerformative(ACLMessage.INFORM);
 				myAgent.send(chute);
 				
