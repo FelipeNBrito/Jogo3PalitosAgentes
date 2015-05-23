@@ -15,6 +15,7 @@ public class LogDoJogo extends JPanel{
 		
 		this.textArea = new JTextArea(10, 40);
 		this.textArea.setEditable(false);
+		
 		JScrollPane jsp = new JScrollPane(this.textArea);
 		add(jsp);
 	}

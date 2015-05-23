@@ -21,7 +21,7 @@ public class RodadaBehaviour extends Behaviour{
 	public void action() {
 		
 		if(agente.todosOsJogadoresChutaram()){
-			agente.addLog("O mediador vai analisar os chutes e indicar o vencedor");
+			agente.addLog("O mediador vai analisar os chutes e indicar o vencedor da rodada");
 			Map<AID,Integer> jogadoresNoJogo = agente.chutesDaRodada();
 			
 			this.vencedorAID = null;

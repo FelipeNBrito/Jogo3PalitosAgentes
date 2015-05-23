@@ -40,7 +40,7 @@ public class InformarVencedorDaRodada extends OneShotBehaviour{
 		agente.send(mensagem);
 		
 		if(this.vencedorAID == null){
-			agente.addLog("Niguem ganhou a rodada");
+			agente.addLog("Niguem ganhou a rodada!");
 		}else{
 			agente.addLog("O vencedor da rodada foi o agente "+this.vencedorAID.getLocalName());
 		}

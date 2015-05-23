@@ -24,6 +24,8 @@ public class ReceberQuantidadeDePalitosNaMaoBehavior extends Behaviour{
 		if(mensagem != null){
 			int quantidadeDePalitos = Integer.parseInt(mensagem.getContent());
 			agente.addQuantidadeDePalitosNaMaoDoJogador(mensagem.getSender(), quantidadeDePalitos);
+			agente.addLog("O agente " + mensagem.getSender() + "informou que tem " + 
+					quantidadeDePalitos + " palitos na mão.");
 		}else{
 			block();
 		}
