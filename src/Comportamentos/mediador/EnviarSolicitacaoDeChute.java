@@ -29,7 +29,8 @@ public class EnviarSolicitacaoDeChute extends TickerBehaviour {
 		
 		ACLMessage mensagem = new ACLMessage(ACLMessage.REQUEST);
 		
-		mensagem.setConversationId("request-chute");
+		mensagem.setOntology("request-chute");
+		mensagem.setConversationId(String.valueOf(mediador.getNumeroDaRodada()));
 		mensagem.addReceiver(aidDestinatario);
 		
 		mediador.addLog("Solicitacao de chute enviada ao jogador: "+ aidDestinatario.getLocalName());

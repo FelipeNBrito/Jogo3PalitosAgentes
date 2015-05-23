@@ -16,8 +16,8 @@ public class ReceberQuantidadeDePalitosNaMaoBehavior extends Behaviour{
 	@Override
 	public void action() {
 
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-num-palitos"), 
-				MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchOntology("inform-num-palitos"), 
+				MessageTemplate.MatchPerformative(ACLMessage.INFORM)),MessageTemplate.MatchConversationId(String.valueOf(agente.getNumeroDaRodada())));
 		
 		ACLMessage mensagem = this.agente.receive(mt);
 		

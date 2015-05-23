@@ -19,8 +19,8 @@ public class ReceberSolicitacaoDeJogoBehaviour extends Behaviour {
 	@Override
 	public void action() {
 		
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("request-participar-do-jogo"),
-													MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchOntology("request-participar-do-jogo"), 
+				MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 		ACLMessage msg = this.agente.receive(mt);
 		
 		
@@ -31,7 +31,7 @@ public class ReceberSolicitacaoDeJogoBehaviour extends Behaviour {
 				
 				ACLMessage resposta = msg.createReply();
 				resposta.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-				resposta.setConversationId("accept-agente-entrou-no-jogo");
+				resposta.setOntology("accept-agente-entrou-no-jogo");
 				resposta.setContent("voce esta participando");
 				agente.send(resposta);
 				

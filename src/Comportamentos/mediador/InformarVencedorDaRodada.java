@@ -23,7 +23,8 @@ public class InformarVencedorDaRodada extends OneShotBehaviour{
 	public void action() {
 		
 		ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
-		mensagem.setConversationId("inform-jogador-vencedor");
+		mensagem.setOntology("inform-jogador-vencedor");
+		mensagem.setConversationId(String.valueOf(agente.getNumeroDaRodada()));
 		
 		try {
 			mensagem.setContentObject(this.vencedorAID);

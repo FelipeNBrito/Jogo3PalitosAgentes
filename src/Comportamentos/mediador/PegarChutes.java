@@ -32,8 +32,8 @@ public class PegarChutes extends CyclicBehaviour{
 		
 		
 		if(mediador.todosOsAgentesJaInformaramAQuantidadeDePalitosNaMao() && !this.mediador.todosOsJogadoresChutaram()){
-			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-chute"), 
-					MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+			MessageTemplate mt =MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchOntology("inform-chute"), 
+					MessageTemplate.MatchPerformative(ACLMessage.INFORM)),MessageTemplate.MatchConversationId(String.valueOf(mediador.getNumeroDaRodada())));
 			
 			ACLMessage msg = this.mediador.receive(mt);
 			
@@ -59,7 +59,8 @@ public class PegarChutes extends CyclicBehaviour{
 		
 		ACLMessage mensagem = new ACLMessage(ACLMessage.REQUEST);
 		
-		mensagem.setConversationId("request-chute");
+		mensagem.setOntology("request-chute");
+		mensagem.setConversationId(String.valueOf(mediador.getNumeroDaRodada()));
 		mensagem.addReceiver(aidDestinatario);
 		
 		mediador.addLog("Solicitacao de chute enviada ao jogador: "+ aidDestinatario.getLocalName());
@@ -86,7 +87,8 @@ public class PegarChutes extends CyclicBehaviour{
 	private void enviarRecusaDeChute(AID jogador, int chute) {
 		ACLMessage mensagem = new ACLMessage(ACLMessage.REFUSE);
 		mensagem.addReceiver(jogador);
-		mensagem.setConversationId("refuse-chute");
+		mensagem.setOntology("refuse-chute");
+		mensagem.setConversationId(String.valueOf(mediador.getNumeroDaRodada()));
 		mensagem.setContent(chute+"");
 		mediador.send(mensagem);
 	}

@@ -24,7 +24,7 @@ public class SolicitarEntradaNoJogo extends Behaviour{
 			this.jaEnviouSolicitacao = true;
 		}else if(mediadorAID != null){
 			ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-			msg.setConversationId("request-participar-do-jogo");
+			msg.setOntology("request-participar-do-jogo");
 			msg.addReceiver(mediadorAID);
 			this.agente.send(msg);
 			

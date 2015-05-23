@@ -16,7 +16,7 @@ public class InformarQuantosPalitosJogueiBehaviour extends CyclicBehaviour{
 	
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("request-num-palitos"), 
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchOntology("request-num-palitos"), 
 				MessageTemplate.MatchPerformative(ACLMessage.REQUEST));
 		
 		ACLMessage msg = this.agente.receive(mt);
@@ -28,7 +28,7 @@ public class InformarQuantosPalitosJogueiBehaviour extends CyclicBehaviour{
 			int quantidade = this.agente.getQuantidadeDePalitosNaMao();
 			reply.setContent(quantidade+"");
 			reply.setPerformative(ACLMessage.INFORM);
-			reply.setConversationId("inform-num-palitos");
+			reply.setOntology("inform-num-palitos");
 			this.agente.send(reply);
 			System.out.println("A agente " + this.agente.getLocalName() +
 					" informou que tem " + quantidade + "palitos na mão" );

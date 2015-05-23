@@ -18,12 +18,13 @@ public class ReceberSolicitacaoDeChute extends Behaviour{
 	@Override
 	public void action() {
 		
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchConversationId("inform-chute"), 
-				MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchOntology("inform-chute"), 
+				MessageTemplate.MatchPerformative(ACLMessage.INFORM)),MessageTemplate.MatchConversationId(String.valueOf(mediador.getNumeroDaRodada())));
+
 		
 		ACLMessage msg = this.mediador.receive(mt);
 		
-		if(msg != null && !mediador.jogadorJaChutouNaRodada(msg.getSender())){
+		if(msg != null && mediador.jogadorJaChutouNaRodada(msg.getSender())){
 			
 			int chute = Integer.parseInt(msg.getContent());		
 			mediador.addLog("O chute do agente "+msg.getSender().getLocalName()+" foi "+ chute);
