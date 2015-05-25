@@ -45,7 +45,7 @@ public class LogDoJogo extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		this.textArea = new JTextArea(35, 70);
+		this.textArea = new JTextArea(25, 65);
 		this.textArea.setBounds(0, 0, 650, 450);
 		this.textArea.setEditable(false);
 		this.textArea.setLineWrap(true);
