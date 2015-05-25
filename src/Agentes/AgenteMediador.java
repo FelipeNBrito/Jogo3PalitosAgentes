@@ -194,7 +194,7 @@ public class AgenteMediador extends Agent{
 	
 	public void iniciarPartida(){
 		
-		if(!this.jogoEmAndamento && this.agentesNoJogo.size() > 0){
+		if(!this.jogoEmAndamento && this.agentesNoJogo.size() > 1){
 			this.jogoEmAndamento = true;
 			
 			for(AID jogador:agentesNoJogo){
@@ -204,6 +204,10 @@ public class AgenteMediador extends Agent{
 			addBehaviour(new InformarJogoIniciadoBaheviour(this));
 			
 			this.iniciarRodada();
+		}else if(this.jogoEmAndamento){
+			this.log.addLog("O jogo já está em andamento");
+		}else{
+			this.log.addLog("Não há jogadores suficiente");
 		}
 	}
 }

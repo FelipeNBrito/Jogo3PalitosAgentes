@@ -46,7 +46,7 @@ public class LogDoJogo extends JFrame{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.textArea = new JTextArea(35, 70);
-		this.textArea.setBounds(0, 0, 780, 580);
+		this.textArea.setBounds(0, 0, 650, 450);
 		this.textArea.setEditable(false);
 		this.textArea.setLineWrap(true);
 		
@@ -58,7 +58,7 @@ public class LogDoJogo extends JFrame{
 		jp.add(jsp);
 	
 		JButton btnInicial = new JButton("Inciar Jogo");
-		btnInicial.setBounds(10, 10, 100, 80);
+		btnInicial.setBounds(350, 700, 100, 80);
 		btnInicial.setBackground(Color.RED);
 		btnInicial.setForeground(Color.WHITE);
 		jp.add(btnInicial);
@@ -81,9 +81,6 @@ public class LogDoJogo extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			this.mediador.iniciarPartida();
-			this.botao.setEnabled(false);
-			this.botao.setBackground(Color.GRAY);
-			this.botao.setForeground(Color.WHITE);
 		}
 		
 	}
