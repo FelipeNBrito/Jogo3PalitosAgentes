@@ -117,6 +117,10 @@ public class AgenteJogador extends Agent {
 		}
 		
 		chute += this.quantidadeDePalitosNaMao;
+		
+		if(chutes.containsValue(chute)){
+			return gerarChute(chutes);
+		}
 		return chute;
 			
 	}
