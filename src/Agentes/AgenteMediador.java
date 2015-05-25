@@ -205,9 +205,9 @@ public class AgenteMediador extends Agent{
 			
 			this.iniciarRodada();
 		}else if(this.jogoEmAndamento){
-			this.log.addLog("O jogo já está em andamento");
+			this.log.addLog("O jogo já está em andamento!");
 		}else{
-			this.log.addLog("Não há jogadores suficiente");
+			this.log.addLog("Não há jogadores suficiente!");
 		}
 	}
 }
