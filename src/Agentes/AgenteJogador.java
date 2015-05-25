@@ -66,21 +66,7 @@ public class AgenteJogador extends Agent {
 		this.quantidadeDePalitosNaMao = random.nextInt(this.quantidadeDePalitosTotal + 1);
 	}
 
-	public int gerarChute(Map<AID, Integer> chutes, int p) {
-		int somaPalitosTotal = 0;
-		for(int totalDoAgente : agentesNaPartida.values()){
-			somaPalitosTotal += totalDoAgente;
-		}
-		
-		Random rand = new Random();
-		int chute = rand.nextInt(somaPalitosTotal - quantidadeDePalitosTotal+ quantidadeDePalitosNaMao + 1);
-		
-		if(chutes.containsValue(chute)){
-			return gerarChute(chutes);
-		}
-		
-		return chute;	
-	}
+
 	
 	public int gerarChute(Map<AID, Integer> chutes) {
 		int chute = 0;
@@ -119,7 +105,7 @@ public class AgenteJogador extends Agent {
 		chute += this.quantidadeDePalitosNaMao;
 		
 		if(chutes.containsValue(chute)){
-			return gerarChute(chutes);
+			return this.gerarChute(chutes);
 		}
 		return chute;
 			

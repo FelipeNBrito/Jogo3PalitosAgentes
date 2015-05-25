@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import Comportamentos.mediador.EnviarSolicitacaoDeChute;
+import Comportamentos.mediador.ImprimirLogBehaviour;
 import Comportamentos.mediador.InformarJogoIniciadoBaheviour;
 import Comportamentos.mediador.ReceberQuantidadeDePalitosNaMaoBehavior;
 import Comportamentos.mediador.ReceberSolicitacaoDeChute;
@@ -42,21 +43,12 @@ public class AgenteMediador extends Agent{
 		this.registrarNasPaginasAmarelas();
 		this.chutes = new HashMap<AID, Integer>();
 		this.quantidadeDePalitosTotal = new HashMap<AID, Integer>();
-		this.log = LogDoJogo.criarEMostrarGUI();
+		this.log = new LogDoJogo(this);
 		this.numeroDaRodada = 0;
 		
-		
+		addBehaviour(new ImprimirLogBehaviour(log, 3000, this));
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
-		addBehaviour(new TickerBehaviour(this, 40000) {
-			
-
-			@Override
-			protected void onTick() {
-				// TODO Auto-generated method stub
-				((AgenteMediador) myAgent).iniciarPartida();
-				this.myAgent.removeBehaviour(this);
-			}
-		});
+		
 		
 	}
 	
@@ -201,14 +193,17 @@ public class AgenteMediador extends Agent{
 	}
 	
 	public void iniciarPartida(){
-		this.jogoEmAndamento = true;
 		
-		for(AID jogador:agentesNoJogo){
-			this.ordemDosJogadores.add(jogador);
+		if(!this.jogoEmAndamento && this.agentesNoJogo.size() > 0){
+			this.jogoEmAndamento = true;
+			
+			for(AID jogador:agentesNoJogo){
+				this.ordemDosJogadores.add(jogador);
+			}
+			
+			addBehaviour(new InformarJogoIniciadoBaheviour(this));
+			
+			this.iniciarRodada();
 		}
-		
-		addBehaviour(new InformarJogoIniciadoBaheviour(this));
-		
-		this.iniciarRodada();
 	}
 }
