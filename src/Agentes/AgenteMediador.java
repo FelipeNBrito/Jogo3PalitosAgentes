@@ -47,7 +47,7 @@ public class AgenteMediador extends Agent{
 		
 		
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
-		addBehaviour(new TickerBehaviour(this, 20000) {
+		addBehaviour(new TickerBehaviour(this, 40000) {
 			
 
 			@Override
@@ -78,7 +78,7 @@ public class AgenteMediador extends Agent{
 	
 	public void fimDeJogo(AID vencedor){
 		this.jogoEmAndamento = false;
-		System.out.println("O agente vencedor foi: " + vencedor.getLocalName());
+		this.log.addLog("O agente vencedor foi: " + vencedor.getLocalName());
 		this.doDelete();
 	}
 	
@@ -193,7 +193,7 @@ public class AgenteMediador extends Agent{
 	
 		addBehaviour(new SolicitarQuantidadeDePalitosNaMaoBehaviour(this));
 		addBehaviour(new ReceberQuantidadeDePalitosNaMaoBehavior(this));
-		TickerBehaviour solicitarChute = new EnviarSolicitacaoDeChute(this, 5000);
+		TickerBehaviour solicitarChute = new EnviarSolicitacaoDeChute(this, 10000);
 		addBehaviour(solicitarChute);
 		addBehaviour(new ReceberSolicitacaoDeChute(this,solicitarChute));
 		addBehaviour(new RodadaBehaviour(this));

@@ -66,7 +66,7 @@ public class AgenteJogador extends Agent {
 		this.quantidadeDePalitosNaMao = random.nextInt(this.quantidadeDePalitosTotal + 1);
 	}
 
-	public int gerarChute(Map<AID, Integer> chutes) {
+	public int gerarChute(Map<AID, Integer> chutes, int p) {
 		int somaPalitosTotal = 0;
 		for(int totalDoAgente : agentesNaPartida.values()){
 			somaPalitosTotal += totalDoAgente;
@@ -79,8 +79,46 @@ public class AgenteJogador extends Agent {
 			return gerarChute(chutes);
 		}
 		
-		return chute;
+		return chute;	
+	}
+	
+	public int gerarChute(Map<AID, Integer> chutes) {
+		int chute = 0;
+		int somaPalitosTotal = 0;
+		Random rand = new Random();
+
+		for(int totalDoAgente : agentesNaPartida.values()){
+			somaPalitosTotal += totalDoAgente;
+		}
 		
+		for(Map.Entry<AID, Integer> chuteJogaodr : chutes.entrySet()){
+			int palitosNaMaoDoJogador = agentesNaPartida.get(chuteJogaodr.getKey());
+			if( chuteJogaodr.getValue() == somaPalitosTotal){
+				chute += palitosNaMaoDoJogador;
+			} else if( chuteJogaodr.getValue() == somaPalitosTotal - 1){
+				chute += palitosNaMaoDoJogador - 1 + rand.nextInt(2);
+			} else if( chuteJogaodr.getValue() == somaPalitosTotal - 2){
+				chute += palitosNaMaoDoJogador - 2 + rand.nextInt(3); 
+			} else if(chuteJogaodr.getValue() == 2){
+				chute += rand.nextInt(3);
+			} else if(chuteJogaodr.getValue() == 1){
+				chute += rand.nextInt(2);
+			}else if(chuteJogaodr.getValue() == 0){
+				chute += 0;
+			} else {
+				chute += rand.nextInt(4);
+			}
+		}
+		
+		for(AID aidAgente : agentesNaPartida.keySet()){
+			if(!chutes.containsKey(aidAgente) && !aidAgente.equals(this.getAID())){
+				chute += rand.nextInt(agentesNaPartida.get(aidAgente) + 1);
+			}
+		}
+		
+		chute += this.quantidadeDePalitosNaMao;
+		return chute;
+			
 	}
 	
 	public void setPartidaIniciada(boolean partidaIniciada){
