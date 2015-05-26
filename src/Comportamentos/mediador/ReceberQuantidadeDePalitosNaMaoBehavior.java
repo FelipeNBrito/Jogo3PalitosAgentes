@@ -15,7 +15,10 @@ public class ReceberQuantidadeDePalitosNaMaoBehavior extends Behaviour{
 	}
 	@Override
 	public void action() {
-
+		if(!this.agente.isJogoEmAndamento()){
+			this.agente.removeBehaviour(this);
+		}
+		
 		MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchOntology("inform-num-palitos"), 
 				MessageTemplate.MatchPerformative(ACLMessage.INFORM)),MessageTemplate.MatchConversationId(String.valueOf(agente.getNumeroDaRodada())));
 		

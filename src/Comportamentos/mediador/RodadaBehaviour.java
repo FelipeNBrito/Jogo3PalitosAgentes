@@ -19,6 +19,9 @@ public class RodadaBehaviour extends Behaviour{
 	
 	@Override
 	public void action() {
+		if(!this.agente.isJogoEmAndamento()){
+			this.agente.removeBehaviour(this);
+		}
 		
 		if(agente.todosOsJogadoresChutaram()){
 			agente.addLog("O mediador vai analisar os chutes e indicar o vencedor da rodada");

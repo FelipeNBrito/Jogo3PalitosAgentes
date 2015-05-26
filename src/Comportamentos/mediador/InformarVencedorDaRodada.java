@@ -21,6 +21,9 @@ public class InformarVencedorDaRodada extends OneShotBehaviour{
 	}
 	@Override
 	public void action() {
+		if(!this.agente.isJogoEmAndamento()){
+			this.agente.removeBehaviour(this);
+		}
 		
 		ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
 		mensagem.setOntology("inform-jogador-vencedor");

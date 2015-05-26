@@ -17,6 +17,9 @@ public class ReceberSolicitacaoDeChute extends Behaviour{
 	
 	@Override
 	public void action() {
+		if(!this.mediador.isJogoEmAndamento()){
+			this.mediador.removeBehaviour(this);
+		}
 		
 		MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchOntology("inform-chute"), 
 				MessageTemplate.MatchPerformative(ACLMessage.INFORM)),MessageTemplate.MatchConversationId(String.valueOf(mediador.getNumeroDaRodada())));

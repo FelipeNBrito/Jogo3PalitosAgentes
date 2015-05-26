@@ -15,7 +15,7 @@ import java.util.Map;
 
 import Comportamentos.mediador.EnviarSolicitacaoDeChute;
 import Comportamentos.mediador.ImprimirLogBehaviour;
-import Comportamentos.mediador.InformarJogoIniciadoBaheviour;
+import Comportamentos.mediador.InformarJogoIniciadoBehaviour;
 import Comportamentos.mediador.ReceberQuantidadeDePalitosNaMaoBehavior;
 import Comportamentos.mediador.ReceberSolicitacaoDeChute;
 import Comportamentos.mediador.ReceberSolicitacaoDeJogoBehaviour;
@@ -71,6 +71,7 @@ public class AgenteMediador extends Agent{
 	public void fimDeJogo(AID vencedor){
 		this.jogoEmAndamento = false;
 		this.log.addLog("O agente vencedor foi: " + vencedor.getLocalName());
+		this.jogoEmAndamento = false;
 	}
 	
 	public int getQuantidadeTotalDePalitosNaMaoDosJogadores(){
@@ -174,21 +175,22 @@ public class AgenteMediador extends Agent{
 	}
 	
 	public void iniciarRodada(){
-		this.numeroDaRodada++;
-		this.quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
-		this.chutes = new HashMap<AID, Integer>();
-		if(this.ordemDosJogadores.size() > 0){
-			AID jogadorDaVez = this.ordemDosJogadores.remove(0);
-			this.ordemDosJogadores.add(jogadorDaVez);
-		}
-	
-		addBehaviour(new SolicitarQuantidadeDePalitosNaMaoBehaviour(this));
-		addBehaviour(new ReceberQuantidadeDePalitosNaMaoBehavior(this));
-		TickerBehaviour solicitarChute = new EnviarSolicitacaoDeChute(this, 10000);
-		addBehaviour(solicitarChute);
-		addBehaviour(new ReceberSolicitacaoDeChute(this,solicitarChute));
-		addBehaviour(new RodadaBehaviour(this));
+		if(this.jogoEmAndamento){
+			this.numeroDaRodada++;
+			this.quantidadeDePalitosNaMaoDosJogadores = new HashMap<AID,Integer>();
+			this.chutes = new HashMap<AID, Integer>();
+			if(this.ordemDosJogadores.size() > 0){
+				AID jogadorDaVez = this.ordemDosJogadores.remove(0);
+				this.ordemDosJogadores.add(jogadorDaVez);
+			}
 		
+			addBehaviour(new SolicitarQuantidadeDePalitosNaMaoBehaviour(this));
+			addBehaviour(new ReceberQuantidadeDePalitosNaMaoBehavior(this));
+			TickerBehaviour solicitarChute = new EnviarSolicitacaoDeChute(this, 10000);
+			addBehaviour(solicitarChute);
+			addBehaviour(new ReceberSolicitacaoDeChute(this,solicitarChute));
+			addBehaviour(new RodadaBehaviour(this));
+		}
 	}
 	
 	public void iniciarPartida(){
@@ -200,7 +202,7 @@ public class AgenteMediador extends Agent{
 				this.ordemDosJogadores.add(jogador);
 			}
 			
-			addBehaviour(new InformarJogoIniciadoBaheviour(this));
+			addBehaviour(new InformarJogoIniciadoBehaviour(this));
 			
 			this.iniciarRodada();
 		}else if(this.jogoEmAndamento){

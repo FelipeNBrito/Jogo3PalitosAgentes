@@ -27,6 +27,10 @@ public class EnviarSolicitacaoDeChute extends TickerBehaviour {
 	
 	private void enviarRequisicaoDeChute(AID aidDestinatario) {
 		
+		if(!this.mediador.isJogoEmAndamento()){
+			this.mediador.removeBehaviour(this);
+		}
+		
 		ACLMessage mensagem = new ACLMessage(ACLMessage.REQUEST);
 		
 		mensagem.setOntology("request-chute");
@@ -41,7 +45,9 @@ public class EnviarSolicitacaoDeChute extends TickerBehaviour {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		mediador.send(mensagem);
+		
 	}
 
 }

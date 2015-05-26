@@ -19,7 +19,10 @@ public class SolicitarQuantidadeDePalitosNaMaoBehaviour extends OneShotBehaviour
 	
 	@Override
 	public void action() {
-	
+		if(!this.agente.isJogoEmAndamento()){
+			this.agente.removeBehaviour(this);
+		}
+		
 		ACLMessage mensagem = new ACLMessage(ACLMessage.REQUEST);
 		mensagem.setOntology("request-num-palitos");
 		mensagem.setConversationId(String.valueOf(agente.getNumeroDaRodada()));

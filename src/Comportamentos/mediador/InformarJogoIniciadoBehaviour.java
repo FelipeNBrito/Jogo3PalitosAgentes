@@ -9,11 +9,11 @@ import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
-public class InformarJogoIniciadoBaheviour extends Behaviour{
+public class InformarJogoIniciadoBehaviour extends Behaviour{
 
 	private AgenteMediador agente;
 	
-	public InformarJogoIniciadoBaheviour(AgenteMediador agente) {
+	public InformarJogoIniciadoBehaviour(AgenteMediador agente) {
 		this.agente = agente;
 	}
 	
