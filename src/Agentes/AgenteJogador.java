@@ -104,8 +104,12 @@ public class AgenteJogador extends Agent {
 		
 		chute += this.quantidadeDePalitosNaMao;
 		
-		if(chutes.containsValue(chute)){
-			return this.gerarChute(chutes);
+		while(chutes.containsValue(chute)){
+			if(rand.nextInt(2) == 1 && chute < somaPalitosTotal){
+				chute += 1;
+			}else if(chute > 0){
+				chute -= 1;
+			}
 		}
 		return chute;
 			

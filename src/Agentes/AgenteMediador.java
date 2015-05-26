@@ -46,7 +46,7 @@ public class AgenteMediador extends Agent{
 		this.log = new LogDoJogo(this);
 		this.numeroDaRodada = 0;
 		
-		addBehaviour(new ImprimirLogBehaviour(log, 3000, this));
+		addBehaviour(new ImprimirLogBehaviour(log, 1500, this));
 		addBehaviour(new ReceberSolicitacaoDeJogoBehaviour(this));
 		
 		
@@ -71,7 +71,6 @@ public class AgenteMediador extends Agent{
 	public void fimDeJogo(AID vencedor){
 		this.jogoEmAndamento = false;
 		this.log.addLog("O agente vencedor foi: " + vencedor.getLocalName());
-		this.doDelete();
 	}
 	
 	public int getQuantidadeTotalDePalitosNaMaoDosJogadores(){

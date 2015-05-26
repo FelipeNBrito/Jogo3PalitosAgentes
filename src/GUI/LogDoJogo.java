@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -19,6 +20,7 @@ public class LogDoJogo extends JFrame{
 	private static JTextArea textArea;
 	private AgenteMediador agente;
 	private List<String> mensagens;
+	private JScrollBar vertical;
 	
 	public LogDoJogo(AgenteMediador agente) {
 		this.agente = agente;
@@ -34,6 +36,7 @@ public class LogDoJogo extends JFrame{
 		if(this.mensagens.size() > 0){
 			this.textArea.append(this.mensagens.get(0)+" \n");
 			this.mensagens.remove(0);
+			vertical.setValue( vertical.getMaximum() );
 		}
 	}
 	
@@ -44,7 +47,7 @@ public class LogDoJogo extends JFrame{
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
+
 		this.textArea = new JTextArea(30, 65);
 		this.textArea.setBounds(0, 0, 650, 450);
 		this.textArea.setEditable(false);
@@ -55,6 +58,8 @@ public class LogDoJogo extends JFrame{
 		add(jp);
 		
 		JScrollPane jsp = new JScrollPane(this.textArea);
+		vertical = jsp.getVerticalScrollBar();
+		
 		jp.add(jsp);
 	
 		JButton btnInicial = new JButton("Inciar Jogo");
@@ -63,7 +68,7 @@ public class LogDoJogo extends JFrame{
 		btnInicial.setForeground(Color.WHITE);
 		jp.add(btnInicial);
 		
-		btnInicial.addActionListener(new EventoBotao(this.agente, btnInicial));
+		btnInicial.addActionListener(new EventoBotao(this.agente));
 		
 		this.setVisible(true);
 	}
@@ -71,11 +76,9 @@ public class LogDoJogo extends JFrame{
 	private class EventoBotao implements ActionListener{
 
 		private AgenteMediador mediador;
-		private JButton botao;
 		
-		public EventoBotao(AgenteMediador mediador, JButton botao) {
+		public EventoBotao(AgenteMediador mediador) {
 			this.mediador = mediador;
-			this.botao = botao;
 		}
 		
 		@Override
